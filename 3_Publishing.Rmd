@@ -1,0 +1,23 @@
+---
+title: "Sharing a Shiny app"
+author: "Megsie Siple"
+date: "February 17, 2019"
+output: 
+  ioslides_presentation:
+    widescreen: true
+---
+
+
+
+## Publishing and sharing
+Once you've made an app, you can share them via:
+- web-based apps
+- online dashboards
+- [embed them in Markdown files](https://r4ds.had.co.nz/r-markdown-formats.html)
+
+## To share them online:
+- install `rsconnect` 
+- sign up for a shinyapps.io account (instructions [here](http://shiny.rstudio.com/articles/shinyapps.html))
+- get your token and publish straight from RStudio
+
+

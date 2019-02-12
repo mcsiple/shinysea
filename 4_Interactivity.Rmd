@@ -1,0 +1,30 @@
+---
+title: "Getting data in and out of Shiny"
+author: "Megsie Siple"
+date: "February 17, 2019"
+output: 
+  ioslides_presentation:
+    widescreen: true
+---
+
+## 
+
+##My :roll_eyes: can be your :heavy_check_mark:
+ - if you have a total crash when publishing, check your parentheses! )}
+ - 
+ - other helpful pointers
+
+# Other useful tips and tricks
+ - `print()` to the RStudio console to confirm that objects are what you think they are
+ - if you want to save data or outputs and use in several server operations, use `reactive` 
+ - use `kableExtra` to make nice tables
+  - if you use ggplot, define your plots thus:
+```
+output$ggplotoutput <- renderPlot({
+  myplot <- ggplot(dat,aes(x=variable,y=value)) +
+          geom_point() 
+        myplot
+})
+```
+ 
+## Overall Shiny: helpful resources

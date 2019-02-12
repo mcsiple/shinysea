@@ -1,0 +1,83 @@
+---
+title: "2_DataTypes"
+author: "Megsie Siple"
+date: "February 17, 2019"
+output: 
+  ioslides_presentation:
+    widescreen: true
+---
+
+## Interactive plots
+
+
+## Using leaflet for spatial data
+```{r, fig.width=10}
+data(quakes)
+
+leaflet(data = quakes[1:20,]) %>% addTiles() %>%
+  addMarkers(~long, ~lat, popup = ~as.character(mag), label = ~as.character(mag))
+```
+
+## Using leaflet with Shiny
+```{r, fig.width=10,message = FALSE}
+df <- quakes[1:20,]
+leaflet(df) %>% addTiles() %>%
+  addCircleMarkers(
+    radius = ~mag,
+    color = ~depth,
+    stroke = FALSE, fillOpacity = 0.5
+  )
+```
+
+## Leaflet maps in Shiny
+__if you wanted to put this in a Shiny app...
+```
+ui <- fluidPage(
+  leafletOutput("mymap"),
+  p(),
+  actionButton("recalc", "New points")
+)
+
+server <- function(input, output, session) {
+
+  output$mymap <- renderLeaflet({
+    df <- quakes[1:20,]
+    leaflet(df) %>% addTiles() %>%
+      addCircleMarkers(
+        radius = ~mag,
+        color = ~depth,
+        stroke = FALSE, fillOpacity = 0.5
+      )
+  })
+}
+
+shinyApp(ui, server)
+```
+
+## Leaflet maps in Shiny 2
+```{r, echo=FALSE}
+# This part will work if you enable runtime:shiny at the top - but it slows down the doc a lot!
+# ui <- fluidPage(
+#   leafletOutput("mymap"),
+#   p(),
+#   actionButton("recalc", "New points")
+# )
+# 
+# server <- function(input, output, session) {
+# 
+#   output$mymap <- renderLeaflet({
+#     df <- quakes[1:20,]
+#     leaflet(df) %>% addTiles() %>%
+#       addCircleMarkers(
+#         radius = ~mag,
+#         color = ~depth,
+#         stroke = FALSE, fillOpacity = 0.5
+#       )
+#   })
+# }
+# 
+# shinyApp(ui, server)
+```
+## If you want to do more with leaflet and Shiny, some resources I like are:
+- Andrew Tran's [Mapping with R](https://andrewbtran.github.io/NICAR/2017/maps/leaflet-r.html)
+

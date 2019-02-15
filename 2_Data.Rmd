@@ -1,5 +1,5 @@
 ---
-title: "2_DataTypes"
+title: "Spatial data in Shiny"
 author: "Megsie Siple"
 date: "February 17, 2019"
 output: 
@@ -7,15 +7,23 @@ output:
     widescreen: true
 ---
 
-## Interactive plots
+# Fun new data types
 
+## Using leaflet with Shiny
+```{r, fig.width=10, message=FALSE,echo=FALSE}
+library(dplyr);library(leaflet);library(gamair)
+data(mack)
 
-## Using leaflet for spatial data
-```{r, fig.width=10}
-data(quakes)
+fishpal <- colorFactor(RColorBrewer::brewer.pal(5,name = "Dark2"),mack$country)
 
-leaflet(data = quakes[1:20,]) %>% addTiles() %>%
-  addMarkers(~long, ~lat, popup = ~as.character(mag), label = ~as.character(mag))
+leaflet(data = subset(mack,egg.dens>0)) %>% 
+  addTiles() %>%
+  addCircleMarkers(
+    ~lon,~lat,
+    radius = ~egg.dens/60,
+    color = ~fishpal(country),
+    stroke = FALSE, fillOpacity = 0.5
+  )
 ```
 
 ## Using leaflet with Shiny
@@ -41,13 +49,17 @@ ui <- fluidPage(
 server <- function(input, output, session) {
 
   output$mymap <- renderLeaflet({
-    df <- quakes[1:20,]
-    leaflet(df) %>% addTiles() %>%
+    fishpal <- colorFactor(RColorBrewer::brewer.pal(5,name = "Dark2"),mack$country)
+
+    leaflet(data = subset(mack,egg.dens>0)) %>% 
+      addTiles() %>%
       addCircleMarkers(
-        radius = ~mag,
-        color = ~depth,
+        ~lon,~lat,
+        radius = ~egg.dens/60,
+        color = ~fishpal(country),
         stroke = FALSE, fillOpacity = 0.5
       )
+    )
   })
 }
 
@@ -80,4 +92,19 @@ shinyApp(ui, server)
 ```
 ## If you want to do more with leaflet and Shiny, some resources I like are:
 - Andrew Tran's [Mapping with R](https://andrewbtran.github.io/NICAR/2017/maps/leaflet-r.html)
+
+
+Leaflet interfaces very nicely with Shiny
+
+
+# Leftover slides
+## Leaflet is cool
+```{r, fig.width=10, message=FALSE}
+library(dplyr);library(leaflet)
+data(quakes)
+
+leaflet(data = quakes[1:20,]) %>% 
+  addTiles() %>%
+  addMarkers(~long, ~lat, popup = ~as.character(mag), label = ~as.character(mag))
+```
 

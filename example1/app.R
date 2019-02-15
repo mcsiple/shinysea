@@ -1,0 +1,70 @@
+# Rladies Shiny workshop
+# Example 1
+
+# This is a Shiny web application. You can run the application by clicking
+# the 'Run App' button above.
+
+library(shiny)
+library(scales)
+
+# Define UI for application
+ui <- fluidPage(
+   
+   # Application title
+   titlePanel("A simple app"),
+   # The following text will appear below the title. h1 is big text, h6 is small.
+   h5("This app plots orange tree data from three different trees."),
+   # Sidebar with checkbox input 
+   sidebarLayout(
+      sidebarPanel(
+         checkboxGroupInput(inputId = "treeID", # The inputID links to the server logic
+                            label = "Tree number:", # The label is what the user sees
+                             c("1" = 1, 
+                               "2" = 2,
+                               "3" = 3),
+                             selected="1" # Default selection
+                             )
+      ),
+      
+      # Show plots
+      mainPanel(
+         plotOutput("orangePlot"),
+         plotOutput("orangeHist")
+      )
+   ) # end of sidebarLayout
+)
+
+# Define server logic required to plot
+server <- function(input, output) {
+   
+  # Scatterplot
+   output$orangePlot <- renderPlot({
+     # subset to the trees that the user selected:
+      which.trees <- input$treeID
+      tree <- subset(Orange,Tree %in% which.trees)
+      
+      # Plot data for the selected trees:
+      x <- tree$age
+      y <- tree$circumference
+      plot(x,y,
+           xlab="Age (days)",ylab="Circumference (mm)",
+           pch=19, cex=2,col=alpha("forestgreen",0.5))
+   })
+   
+   # Histogram
+   output$orangeHist <- renderPlot({
+     which.trees <- input$treeID
+     tree <- subset(Orange,Tree %in% which.trees) 
+     # Notice, you have to define tree again in this function
+     
+     hist(tree$circumference,
+          col=alpha("forestgreen",0.5),
+          main="",
+          xlab="Circumference (mm)")
+   })
+   
+}
+
+# Run the application 
+shinyApp(ui = ui, server = server)
+

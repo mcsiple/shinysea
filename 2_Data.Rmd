@@ -7,7 +7,7 @@ output:
     widescreen: true
 ---
 
-# Fun new data types
+# Showing spatial data in Shiny
 
 ## Using leaflet with Shiny
 ```{r, fig.width=10, message=FALSE,echo=FALSE}
@@ -26,19 +26,8 @@ leaflet(data = subset(mack,egg.dens>0)) %>%
   )
 ```
 
-## Using leaflet with Shiny
-```{r, fig.width=10,message = FALSE}
-df <- quakes[1:20,]
-leaflet(df) %>% addTiles() %>%
-  addCircleMarkers(
-    radius = ~mag,
-    color = ~depth,
-    stroke = FALSE, fillOpacity = 0.5
-  )
-```
-
 ## Leaflet maps in Shiny
-__if you wanted to put this in a Shiny app...
+__if you wanted to put this in a Shiny app...__
 ```
 ui <- fluidPage(
   leafletOutput("mymap"),
@@ -47,10 +36,8 @@ ui <- fluidPage(
 )
 
 server <- function(input, output, session) {
-
   output$mymap <- renderLeaflet({
     fishpal <- colorFactor(RColorBrewer::brewer.pal(5,name = "Dark2"),mack$country)
-
     leaflet(data = subset(mack,egg.dens>0)) %>% 
       addTiles() %>%
       addCircleMarkers(
@@ -66,30 +53,10 @@ server <- function(input, output, session) {
 shinyApp(ui, server)
 ```
 
-## Leaflet maps in Shiny 2
-```{r, echo=FALSE}
-# This part will work if you enable runtime:shiny at the top - but it slows down the doc a lot!
-# ui <- fluidPage(
-#   leafletOutput("mymap"),
-#   p(),
-#   actionButton("recalc", "New points")
-# )
-# 
-# server <- function(input, output, session) {
-# 
-#   output$mymap <- renderLeaflet({
-#     df <- quakes[1:20,]
-#     leaflet(df) %>% addTiles() %>%
-#       addCircleMarkers(
-#         radius = ~mag,
-#         color = ~depth,
-#         stroke = FALSE, fillOpacity = 0.5
-#       )
-#   })
-# }
-# 
-# shinyApp(ui, server)
-```
+## Adding pop-ups with information
+
+
+
 ## If you want to do more with leaflet and Shiny, some resources I like are:
 - Andrew Tran's [Mapping with R](https://andrewbtran.github.io/NICAR/2017/maps/leaflet-r.html)
 

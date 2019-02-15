@@ -2,7 +2,8 @@
 # - upload a csv
 # - download a report after performing some analysis
 
-library(shiny)
+packages <- c("shiny","tidyverse")
+lapply(packages, library, character.only = T)
 
 ui <- fluidPage(
 titlePanel("Uploading Files"),
@@ -25,6 +26,7 @@ sidebarLayout(
 )
 
 server <- function(input, output) {
+  
   output$contents <- renderTable({
     # input$file1 will be NULL initially. After the user selects
     # and uploads a file, it will be a data frame with 'name',
@@ -45,9 +47,12 @@ server <- function(input, output) {
   # - retrieving a large amt of data from a web source
   # - performing some kind of analysis and want the results of that analysis to be available to all your objects (e.g., model fits)
   inFile2 <- reactive({read.csv(input$file1$datapath,header = input$header)})
-
+  # When you create a reactive object, you call it inside other elements by using empty parens, like inFile2()
+  
+  #abaloneSummary <- reactive({})
+  
   output$contents <- renderTable({
-    head(inFile2())
+    head(inFile2()) # Calls the reactive object made above
   })
 
   output$sizescatter <- renderPlot({

@@ -2,9 +2,7 @@
 title: "An Intro to Shiny"
 author: "Megsie Siple"
 date: "February 17, 2019"
-output: 
-  ioslides_presentation:
-    widescreen: true
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
@@ -23,7 +21,13 @@ __Major uses__
 - communicating science
 - teaching
 
-- ...and it's easy!
+## Fisheries tools that use Shiny
+
+![FishViz](images/2018-10-28 15.03.25.gif)
+
+## Fisheries tools that use Shiny
+
+![EcoCast](images/2018-10-28 15.20.07.gif)
 
 ## Shiny basics
 
@@ -32,8 +36,10 @@ __How it works__
 - user interface & server logic
 - ui shows inputs and outputs
 - server performs all the operations
+- super flexible! you can write in HTML or 
 
 ## An example
+<div class="columns-2">
 ```
 ui <- fluidPage(
 
@@ -72,6 +78,7 @@ server <- function(input, output) {
 }
 ```
 
+
 ## This is what the outcome looks like
  - Can I put a screenshot here?
  - Want to show screenshot of shiny doc from web
@@ -79,4 +86,5 @@ server <- function(input, output) {
 # Try an example!
 
 ## Data are in GitHub repo
+
 

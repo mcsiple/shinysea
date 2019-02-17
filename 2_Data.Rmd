@@ -66,4 +66,4 @@ shinyApp(ui, server)
 ## If you want to do more with leaflet and Shiny, some resources I like are:
 - Andrew Tran's [Mapping with R](https://andrewbtran.github.io/NICAR/2017/maps/leaflet-r.html)
 
-
+# Example 4

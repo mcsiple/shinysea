@@ -48,9 +48,9 @@ server <- function(input, output) {
 ```
 
 
-## Getting data out of shiny
+## Getting data out of Shiny
 - Download CSV or txt files from Shiny apps
 - Generate reports in Markdown that are knitted to html files (details on how to do that [here](https://shiny.rstudio.com/articles/generating-reports.html))
 - You can also download images that have been generated in the app (e.g., download plots from the app)
 
-
+# Example 3

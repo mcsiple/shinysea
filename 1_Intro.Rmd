@@ -78,13 +78,7 @@ server <- function(input, output) {
 }
 ```
 
-
-## This is what the outcome looks like
- - Can I put a screenshot here?
- - Want to show screenshot of shiny doc from web
-
-# Try an example!
-
-## Data are in GitHub repo
+## Try an example!
+ - Data are in GitHub repo
 
 

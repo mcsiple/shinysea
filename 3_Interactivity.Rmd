@@ -10,18 +10,14 @@ output:
 ## Bringing data into Shiny
 If you want to design your app so that people can bring in their own data:
 
-Add a file upload input in the UI using the function `fileInput()`, e.g. `fileInput('mydata')`. In the server function, access the uploaded files via `input$mydata`:
+Add a file upload input in the UI using the function `fileInput()`. In the `server` function, access the uploaded files via `input$mydata`:
 ```
 ui <- fluidPage(
-
   # App title ----
   titlePanel("Uploading Files"),
-  # Sidebar layout with input and output definitions ----
   sidebarLayout(
-    # Sidebar panel for inputs ----
     sidebarPanel(
-      # Input: Select a file ----
-      fileInput("file1", "Choose CSV File",
+      fileInput("mydata", "Choose CSV File",
                 multiple = FALSE,
                 accept = c("text/csv",
                          "text/comma-separated-values,text/plain",
@@ -29,8 +25,32 @@ ui <- fluidPage(
 ```
 
 ## Getting data out of Shiny
+You can download data from a Shiny app using`downloadLink()` in the ui and `downloadHandler()` in the server:
+
+```
+ui <- fluidPage(
+  downloadLink("downloadData", "Download")
+)
+
+server <- function(input, output) {
+  # Our dataset
+  data <- mtcars
+
+  output$downloadData <- downloadHandler(
+    filename = function() {
+      paste("data-", Sys.Date(), ".csv", sep="")
+    },
+    content = function(file) {
+      write.csv(data, file)
+    }
+  )
+}
+```
 
 
-## Example for getting data out
+## Getting data out of shiny
+- Download CSV or txt files from Shiny apps
+- Generate reports in Markdown that are knitted to html files (details on how to do that [here](https://shiny.rstudio.com/articles/generating-reports.html))
+- You can also download images that have been generated in the app (e.g., download plots from the app)
 
 

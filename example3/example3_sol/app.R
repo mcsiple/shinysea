@@ -1,31 +1,32 @@
-# Example 3: Abalone
+# Example 3: Abalone - "solutions"
 # This app allows users to:
 # - upload a csv
 # - create a reactive object that can be accessed from other objects
 # - download a csv containing the results of some action performed on the server
 
-packages <- c("shiny","tidyverse")
+packages <- c("shiny","tidyverse","reshape2")
 lapply(packages, library, character.only = T)
 
 ui <- fluidPage(
-titlePanel("Uploading Files"),
-# Sidebar layout with input and output definitions ----
-sidebarLayout(
-  # Sidebar panel for inputs ----
-  sidebarPanel(
-    # Input: Select a file ----
-    fileInput("file1", "Choose CSV File",
-              multiple = FALSE,
-              accept = c("text/csv",
-                         "text/comma-separated-values,text/plain",
-                         ".csv")),
-              tags$hr(),
-              checkboxInput("header", "Header", TRUE),
-    # Button
-    downloadButton("downloadData", "Download summary")),
-   mainPanel(
-    tableOutput("contents"),
-    plotOutput("sizescatter"))
+  titlePanel("Uploading Files"),
+  # Sidebar layout with input and output definitions ----
+  sidebarLayout(
+    # Sidebar panel for inputs ----
+    sidebarPanel(
+      # Input: Select a file ----
+      fileInput("file1", "Choose CSV File",
+                multiple = FALSE,
+                accept = c("text/csv",
+                           "text/comma-separated-values,text/plain",
+                           ".csv")),
+      tags$hr(),
+      checkboxInput("header", "Header", TRUE),
+      # Button
+      downloadButton("downloadData", "Download summary")),
+    mainPanel(
+      tableOutput("contents"),
+      plotOutput("sizescatter"),
+      plotOutput("summaryplot"))
   ) 
 )
 
@@ -38,10 +39,10 @@ server <- function(input, output) {
     # column will contain the local filenames where the data can
     # be found.
     inFile <- input$file1
-
+    
     if (is.null(inFile))
       return(NULL)
-
+    
     dat <- read.csv(inFile$datapath, header = input$header)
     head(dat)
   })
@@ -59,14 +60,25 @@ server <- function(input, output) {
       as.data.frame()
   })
   
-  #abaloneSummary <- reactive({})
+  abaloneSummary <- reactive({
+  inFile2() %>% group_by(sex) %>% 
+    summarize(mean.wt.whole = mean(weight.w),
+              mean.wt.viscera = mean(weight.v),
+              mean.wt.shucked = mean(weight.s))
+  })
+  
+  output$summaryplot <- renderPlot({
+    ggplot(melt(abaloneSummary(),id.vars="sex"),aes(x=sex,y=value,fill=variable)) +
+      geom_bar(stat='identity',position = 'dodge') + 
+      scale_fill_brewer()
+  })
   
   output$contents <- renderTable({
     head(inFile2()) # Calls the reactive object made above
   })
   
-
-
+  
+  
   output$sizescatter <- renderPlot({
     dat <- inFile2()
     ggplot(dat, aes(x=weight.w,y=rings,colour=sex)) +

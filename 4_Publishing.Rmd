@@ -5,6 +5,23 @@ date: "February 17, 2019"
 output: ioslides_presentation 
 ---
 
+## Publishing and sharing
+Once you've made an app, you can share them via:
+
+ - web-based apps
+ - online dashboards
+ - [embed them in Markdown files](https://r4ds.had.co.nz/r-markdown-formats.html)
+
+## To share them online:
+- install `rsconnect` 
+- sign up for a shinyapps.io account (instructions [here](http://shiny.rstudio.com/articles/shinyapps.html))
+- get a token and publish straight from RStudio
+
+## If you are very excited about Shiny...
+Enter the contest!!!!
+![Shiny contest!!](images/Contest.png)
+
+
 # Other Shiny tidbits
 
 ## My :roll_eyes: can be your :heavy_check_mark:
@@ -23,17 +40,3 @@ output: ioslides_presentation
  - DataCamp has a couple of free online [Shiny courses](https://www.datacamp.com/search?q=shiny), including a lesson on building dashboards 
  - For `leaflet` in Shiny, the [Rstudio leaflet intro](https://rstudio.github.io/leaflet/shiny.html)
 
-## Publishing and sharing
-Once you've made an app, you can share them via:
-- web-based apps
-- online dashboards
-- [embed them in Markdown files](https://r4ds.had.co.nz/r-markdown-formats.html)
-
-## To share them online:
-- install `rsconnect` 
-- sign up for a shinyapps.io account (instructions [here](http://shiny.rstudio.com/articles/shinyapps.html))
-- get your token and publish straight from RStudio
-
-## If you are very excited about Shiny...
-Enter the contest!!!!
-![Shiny contest!!](images/Contest.png)

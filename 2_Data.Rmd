@@ -18,12 +18,15 @@ fishpal <- colorFactor(RColorBrewer::brewer.pal(5,name = "Dark2"),mack$country)
 
 leaflet(data = subset(mack,egg.dens>0)) %>% 
   addTiles() %>%
+  setView(lng = -6.290158, # set default starting window
+          lat = 48.00249,
+          zoom = 5) %>%
   addCircleMarkers(
     ~lon,~lat,
     radius = ~egg.dens/60,
     color = ~fishpal(country),
-    stroke = FALSE, fillOpacity = 0.5
-  )
+    stroke = FALSE, fillOpacity = 0.5, popup = "hello!"
+  )  
 ```
 
 ## Leaflet maps in Shiny
@@ -55,23 +58,12 @@ shinyApp(ui, server)
 
 ## Adding pop-ups with information
 
+- You can add info to pop-ups with text in a shiny leaflet map by using [these instructions](https://stackoverflow.com/questions/28938642/marker-mouse-click-event-in-r-leaflet-for-shiny)
+- The `observe()`function performs a task when the user interacts with part of the map
+
 
 
 ## If you want to do more with leaflet and Shiny, some resources I like are:
 - Andrew Tran's [Mapping with R](https://andrewbtran.github.io/NICAR/2017/maps/leaflet-r.html)
 
-
-Leaflet interfaces very nicely with Shiny
-
-
-# Leftover slides
-## Leaflet is cool
-```{r, fig.width=10, message=FALSE}
-library(dplyr);library(leaflet)
-data(quakes)
-
-leaflet(data = quakes[1:20,]) %>% 
-  addTiles() %>%
-  addMarkers(~long, ~lat, popup = ~as.character(mag), label = ~as.character(mag))
-```
 

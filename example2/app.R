@@ -1,6 +1,12 @@
 # Rladies Shiny workshop
 # Example 2
 
+# If you need these packages:
+# install.packages(c("tidyverse","xtable","kableExtra"))
+
+# Make sure your working directory is set to the location of this file
+# From RStudio: Session --> Set Working Directory -->To Source File Location
+# If you get a string error at some point, run the following before running the app: Sys.setlocale('LC_ALL','C') 
 library(shiny)
 library(tidyverse)
 library(xtable)
@@ -16,25 +22,28 @@ ui <- fluidPage(
    # Sidebar with a dropdown menu for breed
    sidebarLayout(
       sidebarPanel(
-         selectInput("breed",
-                     "Breed:",
-                     choices=unique(dogs$BREED))
+         selectInput(inputId = "breed",
+                     label = "Breed:",
+                     choices = unique(dogs$BREED),
+                     selected = "Shih Tzu") # sets default selection
       ),
       
-      # Show a plot of the generated distribution
+      # Show a plot of the city-wide distribution
       mainPanel(
-        h3("City-wide summary"),
-        plotOutput("gridPlot"),
-         p(),
-         p(),
          column(6, # column() modifies the layout (# is the column width)
-         h4("Most popular breeds in district")),
+         h4("Most popular breeds in district")
+         # Add breedTable here
+         ), 
+         p(), # a line break
+         p(),
          column(6,
-        plotOutput("distPlot"))
+        plotOutput("distPlot")),
+        h3("City-wide summary"),
+        plotOutput("gridPlot"))
          
       )
    )
-)
+
 
 # Server logic
 server <- function(input, output) {
@@ -64,20 +73,23 @@ server <- function(input, output) {
    
    output$gridPlot <- renderPlot({
      
+     # Create a table of the top 10 most popular breeds in the city
      most.popular.breeds <- dogs %>% 
        group_by(BREED) %>% 
        summarize(total=length(HALTER_ID)) %>% 
        top_n(10) %>% as.data.frame()
      
-     dogs %>% filter(BREED %in% most.popular.breeds$BREED) %>%
+     # Subset to data for the most popular breeds
+     data <- dogs %>% filter(BREED %in% most.popular.breeds$BREED) %>%
        group_by(BREED,DISTRICT) %>% 
        summarize(dist.total = (length(HALTER_ID))) %>%
-       ggplot(aes(x = BREED, y = factor(DISTRICT),size=dist.total))+
-       geom_point() + 
+       ggplot(aes(x = BREED, y = factor(DISTRICT),size=dist.total,colour=dist.total))+
+       geom_point(alpha=0.5) +
        theme_classic(base_size=16) + 
        theme(axis.text.x=element_text(angle = -45, hjust = 0)) +
        ylab("District") +
        xlab("Dog breed")
+     data
    })
 }
 

@@ -1,6 +1,8 @@
-library(shiny)
-library(leaflet)
-library(RColorBrewer)
+# Example 4
+# This app displays a map of the quakes dataset
+
+packages <- c("shiny","tidyverse","leaflet","RColorBrewer")
+lapply(packages, library, character.only = T)
 
 ui <- bootstrapPage(
   tags$style(type = "text/css", "html, body {width:100%;height:100%}"),
@@ -54,7 +56,6 @@ server <- function(input, output, session) {
   # Use a separate observer to recreate the legend as needed.
   observe({
     proxy <- leafletProxy("map", data = quakes)
-    
     # Remove any existing legend, and only if the legend is
     # enabled, create a new one.
     proxy %>% clearControls()
@@ -65,6 +66,13 @@ server <- function(input, output, session) {
       )
     }
   })
-}
+  
+# Use observeEvent to have the app react to something new like a click on the map
+  # observeEvent(input$map_marker_click, {
+  #   p <- input$map_marker_click
+  #   print(p)
+  # })
+  # more on event handling here: https://shiny.rstudio.com/reference/shiny/1.0.0/observeEvent.html
+  }
 
 shinyApp(ui, server)

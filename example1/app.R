@@ -1,7 +1,7 @@
 # Rladies Shiny workshop
 # Example 1
 
-# This is a Shiny web application. You can run the application by clicking
+# This is a Shiny web application. In Rstudio you can run the application by clicking
 # the 'Run App' button above.
 
 library(shiny)
@@ -15,9 +15,10 @@ ui <- fluidPage(
    # The following text will appear below the title. h1 is big text, h6 is small.
    h5("This app plots orange tree data from three different trees."),
    # Sidebar with checkbox input 
-   sidebarLayout(
-      sidebarPanel(
-         checkboxGroupInput(inputId = "treeID", # The inputID links to the server logic
+   sidebarLayout( # This defines the layout of the whole page.
+     # Other options include tabsetPanel(), navlistPanel()
+      sidebarPanel(  # Everything in sidebarPanel() describes the contents of the sidebar in the UI
+         checkboxGroupInput(inputId = "treeID", # inputID links ui to the server logic
                             label = "Tree number:", # The label is what the user sees
                              c("1" = 1, 
                                "2" = 2,
@@ -62,7 +63,6 @@ server <- function(input, output) {
           main="",
           xlab="Circumference (mm)")
    })
-   
 }
 
 # Run the application 

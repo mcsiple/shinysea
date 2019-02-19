@@ -1,0 +1,33 @@
+---
+title: "Shiny exercises"
+author: "M. Siple"
+date: "February 19, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Example 1: Orange trees
+-	Change what the user sees in the selectInput menu to “Tree 1”, “Tree 2”, and “Tree 3”
+-	Use `h6()` to put text above each plot describing what it does
+-	Change the color of the histogram to orange
+
+### Example 2: Swiss dogs 
+-	Around line 29 (under `sidebarPanel()`), add a second `selectInput()` option that allows the user to select a district (make the default District 1)
+-	Use that new input with `filter()` to subset the data around line 66, to show a table of the most popular dogs in the district
+-	Add `breedTable` to the outputs using `tableOutput()` around line 35
+-	Add a new plot to your app that shows the average dog birth year by district 
+-	Play around with the data and see what you can do!
+
+### Example 3: Abalone
+-	Create a second `reactive()` object `abalonesummary` that summarizes the abalone data by sex
+-	Then create a new plot (or summary table—or both!) that calls `abalonesummary` and plots the summary
+-	Bonus: Create a new `reactive()` object for the predictions from a `lm()` (or a model of your choice), then add that as a layer in `ggplot()`
+-	Bonus bonus: Add a checkbox that allows the user to decide whether they want to show the predictions on the plot or not
+
+### Example 4: Spatial data with `leaflet()` and shiny
+-	I haven’t actually made any activities for this example, but it would be cool to figure out how to: 
+    -	get additional data to pop up when people click on a map
+    -	work with polygons instead of points

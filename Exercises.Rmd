@@ -5,10 +5,6 @@ date: "February 19, 2019"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 ### Example 1: Orange trees
 -	Change what the user sees in the selectInput menu to “Tree 1”, “Tree 2”, and “Tree 3”
 -	Use `h6()` to put text above each plot describing what it does
